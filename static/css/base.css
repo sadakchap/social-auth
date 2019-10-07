@@ -1,0 +1,20 @@
+.clearfix{
+  clear: both;
+}
+.body{
+  margin: 0;
+  padding: 0;
+}
+.h100v{
+  min-height: 100vh;
+}
+.height100{
+  height: 100%;
+}
+.img-detail{
+  box-shadow: 0 5px 10px #52154E !important;
+  transition: .5s;
+}
+.img-detail:hover{
+    box-shadow: 0 0 10px #0CAADC !important;
+}

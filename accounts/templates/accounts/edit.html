@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} my Info {% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Your Info</legend>
+          {{ u_form|crispy }}
+          {{ p_form|crispy }}
+          <input type="submit" class="btn btn-outline-success btn-lg" value="Change">
+        </fieldset>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %} dashboard {% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-1">Dashboard</h1>
+      {% with total_images_created=request.user.images_created.count %}
+        <p> <h2>Welcome	to	your	dashboard.</h2> You have	bookmarked {{total_images_created }} image{{total_images_created|pluralize }}</p>
+      {% endwith %}
+
+      <p>Drag the following button to your bookmarks to bookmark the images from other websites	→
+        <a href="javascript:{% include 'bookmarklet_launcher.js'%}" class="btn btn-warning">Bookmark it!</a>
+      </p>
+
+
+      <p class="lead">You can <a href="{% url 'edit'%}">edit your profile </a> or <a href="{% url 'password_change'%}">change password</a></p>
+    </div>
+    <div class="container">
+      {% for action in actions %}
+        {% include 'actions/actions_detail.html' %}
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

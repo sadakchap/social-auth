@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} People {% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <h2 class="display-2">People</h2>
+      <div class="row">
+      {% for u in users %}
+          <div class="col text-center">
+            <a href="{{ u.get_absolute_url }}">
+              {% thumbnail u.profile.image "180x180" crop="100%" as im %}
+                <img src="{{ im.url }}" alt="{{ u.username }}" style="border-radius: 50%;object-filt: cover;">
+              {% endthumbnail %}
+            </a>
+            <div class="info my-2">
+              <a href="{{ u.get_absolute_url }}" class="h6 text-center">{{u.username}}</a>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+{% endblock %}

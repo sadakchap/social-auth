@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Images Ranking {% endblock %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h2 class="display-4">Image Ranking</h2>
+    <hr>
+    <ol class="mt-3">
+      {% for i in most_viewed %}
+      <li><a href="{{i.get_absolute_url}}" class="text-success font-weight-bold">{{i.title}}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+
+</div>
+{% endblock %}

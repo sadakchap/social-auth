@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <form method="post">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Login</legend>
+          {{ form|crispy }}
+          <input type="hidden" name="next" value="{{ next }}">
+          <input type="submit" class="btn btn-outline-success btn-lg" value="Login">
+        </fieldset>
+      </form>
+      <p><a href="{% url 'password_reset'%}">Forgot Password?</a></p>
+      <p>Don't have an account <a href="{% url 'register' %}">Register</a></p>
+      <br>
+      <div class="d-flex justify-content-start">
+        <p><a href="{% url 'social:begin' 'github' %}" class="btn btn-dark btn-lg">GitHub</a></p>
+        <p><a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary btn-lg">facebook</a></p>
+        <p><a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-lg">Google</a></p>
+        <!-- <p><a href="{% url 'social:begin' 'twitter' %}" class="btn btn-info btn-lg">Twitter</a></p> -->
+      </div>
+    </div>
+  </div>
+{% endblock %}

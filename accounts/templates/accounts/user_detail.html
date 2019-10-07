@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% block title %} User {{user.username}} {% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <h1 class="display-4 text-capitalize">{{ user.get_full_name }}</h1>
+      <hr class="myhr">
+      	<div class="profile-info">
+          {% thumbnail user.profile.image "180x180" crop="100%" as im %}
+            <img src="{{ im.url }}"	class="user-detail" style="border-radius: 50%;object-filt: cover;">
+          {% endthumbnail %}
+    		</div>
+        {% with	total_followers=user.followers.count %}
+          <div class="d-flex justify-content-between align-items-center ml-lg-5">
+            <span	class="count">
+              <span	class="total">{{ total_followers }}</span> follower{{ total_followers|pluralize }}
+            </span><br>
+        {% endwith %}
+            <a href="#" data-id="{{	user.id	}}"
+              data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+              class="follow btn btn-outline-info btn-lg float-right">
+              {% if	request.user in	user.followers.all %}
+                UnFollow
+              {% else %}
+                Follow
+              {% endif %}
+            </a>
+          </div>
+          <div id="image-list" class="image-container my-5">
+            {% include "images/image_ajax_list.html" with images=user.images_created.all %}
+          </div>
+
+
+    </div>
+  </div>
+{% endblock %}
+
+<script>
+    {% block domready %}
+      $('a.follow').click(function(e){
+        e.preventDefault();
+        $.post('{% url "user_follow" %}',
+            {
+              id: $(this).data('id'),
+              action: $(this).data('action')
+            },
+            function(data){
+                if(data['status']=='ok'){
+                  prev_action = $('a.follow').data('action')
+
+                  $('a.follow').data('action',prev_action == 'follow' ? 'unfollow' : 'follow');
+                  $('a.follow').text(prev_action=='follow' ? 'UnFollow' : 'Follow');
+
+                  let prev_follow = parseInt($('span.count .total').text());
+                  $('span.count .total').text(prev_action=='unfollow'?prev_follow-1:prev_follow+1)
+                }
+            }
+          );
+      });
+    {% endblock %}
+</script>

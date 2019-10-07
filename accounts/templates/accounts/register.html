@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Register{% endblock%}
+{% block content %}
+  <div class="jumbotron">
+    <div class="container">
+      <form method="post">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Register</legend>
+          {{ form|crispy }}
+          <input type="submit" class="btn btn-outline-success btn-lg" value="Create My Account">
+        </fieldset>
+      </form>
+      <p class="lead m-2">Already have an Account <a href="{% url 'login' %}">Log-in</a></p>
+    </div>
+  </div>
+{% endblock %}

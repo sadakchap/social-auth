@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  {% include 'head.html' %}
+  <body>
+    <header>
+    	{% include 'navbar.html'%}
+
+    	{% if messages %}
+	    	<div class="container-fluid m-0 p-0">
+	    		{% for msg in messages %}
+		    		<div class="alert alert-{{ msg.tags }} m-0">
+		    			{{ msg }}
+		    		</div>
+		    	{% endfor %}
+	    	</div>
+   		{% endif %}
+    </header>
+
+    <main>
+    	{% block content %}
+    	{% endblock %}
+    </main>
+
+    <footer></footer>
+
+    {% include 'scripts.html' %}
+    <script>
+      var	csrftoken	=	Cookies.get('csrftoken');
+      function	csrfSafeMethod(method){
+        //	these	HTTP	methods	do	not	require	CSRF	protection
+        return	(/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+        	beforeSend:	function(xhr,	settings){
+            	if	(!csrfSafeMethod(settings.type)	&&	!this.crossDomain){
+                		xhr.setRequestHeader("X-CSRFToken",	csrftoken);
+                  }
+                }
+            });
+    	$(document).ready(function(){
+        {% block domready	%}
+        {% endblock domready %}
+      });
+    </script>
+  </body>
+</html>
